@@ -44,7 +44,7 @@ export default function UploadPhotos() {
             if (roomPk) {
                 createPhotoMutation.mutate({
                     description: "I love react",
-                    file: `https://imagedelivery.net/aSbksvJjax-AUC7qVnaC4A/${result.id}/public`,
+                    file: `https://imagedelivery.net/kksPNybtHoEDhHKbt4ATwg/${result.id}/public`,
                     roomPk,
                 });
             }
