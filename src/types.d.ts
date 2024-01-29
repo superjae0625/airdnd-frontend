@@ -1,3 +1,6 @@
+// Typescript does not know the data type from the API.
+// This file is to fix those complains.
+
 export interface IRoomPhotoPhoto {
     pk: string;
     file: string;

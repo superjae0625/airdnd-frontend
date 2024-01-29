@@ -16,17 +16,20 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
-import { setConstantValue } from "typescript";
+// import { setConstantValue } from "typescript";
 
 export default function RoomDetail() {
+    //useParmas brings all parameters of URL
+    //roomPk from router.tsx
     const { roomPk } = useParams();
     const { isLoading, data } = useQuery<IRoomDetail>(
         [`rooms`, roomPk],
         getRoom
     );
-    const { data: reviewsData, isLoading: isReviewsLoading } = useQuery<
-        IReview[]
-    >([`rooms`, roomPk, `reviews`], getRoomReviews);
+    const { data: reviewsData } = useQuery<IReview[]>(
+        [`rooms`, roomPk, `reviews`],
+        getRoomReviews
+    );
     return (
         <Box
             pb={40}
@@ -48,13 +51,17 @@ export default function RoomDetail() {
                 templateRows={"1fr 1fr"}
                 templateColumns={"repeat(4, 1fr)"}
             >
+                {/* Creates 5 gird items */}
                 {[0, 1, 2, 3, 4].map((index) => (
                     <GridItem
+                        //if it's the first photo, takes 2 cols
+                        //if not, 1.
                         colSpan={index === 0 ? 2 : 1}
                         rowSpan={index === 0 ? 2 : 1}
                         overflow={"hidden"}
                         key={index}
                     >
+                        {/* Inside grids, fill in photos */}
                         <Skeleton isLoaded={!isLoading} h="100%" w="100%">
                             <Image
                                 _hover={{
@@ -69,6 +76,7 @@ export default function RoomDetail() {
                     </GridItem>
                 ))}
             </Grid>
+
             <HStack width={"40%"} justifyContent={"space-between"} mt={10}>
                 <VStack alignItems={"flex-start"}>
                     <Skeleton isLoaded={!isLoading} height={"30px"}>
@@ -95,6 +103,7 @@ export default function RoomDetail() {
                     src={data?.owner.avatar}
                 />
             </HStack>
+
             <Box mt={10}>
                 <Heading mb={5} fontSize={"2xl"}>
                     <HStack>
@@ -107,6 +116,7 @@ export default function RoomDetail() {
                         </Text>
                     </HStack>
                 </Heading>
+
                 <Container mt={16} maxW="container.lg" marginX="none">
                     <Grid gap={10} templateColumns={"1fr 1fr"}>
                         {reviewsData?.map((review, index) => (

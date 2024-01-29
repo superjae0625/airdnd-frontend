@@ -15,16 +15,11 @@ import {
     useToast,
     VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
 import { FaUserNinja, FaLock } from "react-icons/fa";
-// import SocialLogin from "./SocialLogin";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-    IUsernameLoginError,
-    IUsernameLoginSuccess,
-    IUsernameLoginVariables,
-    usernameLogIn,
-} from "../api";
+// Mutation: sending some data to API
+import { usernameLogIn } from "../api";
+// import { error } from "console";
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -38,15 +33,22 @@ interface IForm {
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     const {
-        register,
+        register, //register input in the form
+        // watch, //watch shows the form
         handleSubmit,
         formState: { errors },
         reset,
     } = useForm<IForm>();
+    // console.log(register("lala"));
+    // console.log(watch);
+    // console.log(errors)
     const toast = useToast();
     const queryClient = useQueryClient();
     const mutation = useMutation(usernameLogIn, {
-        onSuccess: () => {
+        onMutate: () => {
+            console.log("mutation starting");
+        },
+        onSuccess: (data) => {
             toast({
                 title: "welcome back!",
                 status: "success",
@@ -54,6 +56,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             onClose();
             queryClient.refetchQueries(["me"]);
             reset();
+        },
+        onError: (error) => {
+            console.log("mutation has an error");
         },
     });
     const onSubmit = ({ username, password }: IForm) => {

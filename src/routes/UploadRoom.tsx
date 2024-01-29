@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { FaBed, FaMoneyBill, FaToilet, FaUsb } from "react-icons/fa";
+import { FaBed, FaMoneyBill, FaToilet } from "react-icons/fa";
 import {
     getAmenities,
     getCategories,
@@ -45,18 +45,20 @@ export default function UploadRoom() {
             navigate(`/rooms/${data.id}`);
         },
     });
+    //From API
     const { data: amenities } = useQuery<IAmenity[]>(
         ["amenities"],
         getAmenities
     );
+    //From API
     const { data: categories } = useQuery<ICategory[]>(
         ["categories"],
         getCategories
     );
-    useHostOnlyPage();
     const onSubmit = (data: IUploadRoomVariables) => {
         mutation.mutate(data);
     };
+    useHostOnlyPage();
     return (
         <ProtectedPage>
             <Box

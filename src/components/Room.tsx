@@ -40,6 +40,7 @@ export default function Room({
         navigate(`/rooms/${pk}/photos`);
     };
     return (
+        // Link is react-router, not Chakra UI
         <Link to={`/rooms/${pk}`}>
             <VStack alignItems={"flex-start"}>
                 <Box

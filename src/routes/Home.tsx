@@ -7,6 +7,10 @@ import { IRoomList } from "../types";
 import { Input, Grid, Text } from "@chakra-ui/react";
 
 export default function Home() {
+    // Set the key as "rooms" and put function getRooms
+    // useQuery let us know if the getRooms function is isLoading or not,
+    // and also let us know if the data is ready or not,
+    // and then save that result to the cache memory, under the name "rooms"
     const { isLoading, data } = useQuery<IRoomList[]>(["rooms"], getRooms);
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -33,6 +37,7 @@ export default function Home() {
             )}
             <Grid
                 templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
+                // 1fr lets columns to take as many spaces as can with same size
                 gap={4}
                 marginTop={4}
             >

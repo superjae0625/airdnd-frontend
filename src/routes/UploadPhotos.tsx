@@ -24,11 +24,17 @@ interface IUploadURLResponse {
     uploadURL: string;
 }
 
+// When the form is submitted,
+// It sends POST request to /medias/photos/get-url
+// That gives back some data(id, and uploadURL)
+
 export default function UploadPhotos() {
     const { register, handleSubmit, watch, reset } = useForm<IForm>();
+    // console.log(watch());
     const { roomPk } = useParams();
     const toast = useToast();
     const createPhotoMutation = useMutation(createPhoto, {
+        // Use this mutation to check reaction from Cloudflare
         onSuccess: () => {
             toast({
                 status: "success",

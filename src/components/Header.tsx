@@ -28,11 +28,13 @@ import { useRef } from "react";
 export default function Header() {
     const { userLoading, isLoggedIn, user } = useUser();
     const {
+        //Login
         isOpen: isLoginOpen,
-        onClose: onLoginClose,
-        onOpen: onLoginOpen,
+        onClose: onLoginClose, //function to turn false
+        onOpen: onLoginOpen, //function to turn true
     } = useDisclosure();
     const {
+        //Sign up
         isOpen: isSignUpOpen,
         onClose: onSignUpClose,
         onOpen: onSignUpOpen,
@@ -40,8 +42,13 @@ export default function Header() {
     const { toggleColorMode } = useColorMode();
     const logoColor = useColorModeValue("red.500", "red.200");
     const Icon = useColorModeValue(FaMoon, FaSun);
+    // first arg -> light mode , second arg -> dark mode
+    // no need to use if - else statment
+    // above settings are stored in local storage
     const toast = useToast();
     const queryClient = useQueryClient();
+    //useRef is not to save value into state
+    //value will be still there after re-render
     const toastId = useRef<ToastId>();
     const mutation = useMutation(logOut, {
         onMutate: () => {
@@ -55,6 +62,8 @@ export default function Header() {
         },
         onSuccess: () => {
             if (toastId.current) {
+                // Without refreshing or chaning page,
+                // it will refetch and change the UI
                 queryClient.refetchQueries(["me"]);
                 toast.update(toastId.current, {
                     status: "success",

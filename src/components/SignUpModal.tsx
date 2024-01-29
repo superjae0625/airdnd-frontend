@@ -70,6 +70,7 @@ export default function SignUpModal({ onClose, isOpen }: SignUpModalProps) {
 
     return (
         <Modal onClose={onClose} isOpen={isOpen}>
+            {/* ModalOverlay makes background page darker that stands out Modal */}
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>Sign up</ModalHeader>

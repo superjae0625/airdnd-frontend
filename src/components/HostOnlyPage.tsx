@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useUser from "../lib/useUser";
 
+//Hook
 export default function useHostOnlyPage() {
     const { user, userLoading } = useUser();
     const navigate = useNavigate();
